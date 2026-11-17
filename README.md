@@ -10,3 +10,13 @@ An image is a file containing all the informations necessary for building a cont
 
 ### 3 - Compare the size of your image with a non-slim base image. What do you observe?
 We notice that the non-slim base image is much heavier than our image with a 1.388GB difference in disk usage and a 365.2MB content size difference.
+
+### Q4. Why tag with the commit SHA rather than latest?
+
+This tags each image with the commit it is associated with.
+Immutability: latest is overwritten at every push, so the same tag can point to different code over time.
+Rollback: to go back, you redeploy a previous SHA. With latest, you can’t know what you’d get.
+Deployment reliability: tools like Kubernetes may not pull a new image if the tag name hasn’t changed.
+
+### Q5. What does “fail fast” mean in a pipeline?
+The pipeline stops at the first failure and reports it immediately, instead of continuing with later steps. Cheap, fast checks (lint, unit tests) run before slow, expensive ones (image build, publish). This gives quicker feedback and saves CI time. It also prevents broken code from being published. Here, needs: build-test means publish never runs when tests fail, which is exactly what your screenshot showed.
