@@ -6,6 +6,10 @@ app.get('/ping', (_, res) => {
     res.send('Pong!\n')
 })
 
+app.get('/health', (_, res) => {
+    res.send('OK')
+})
+
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
