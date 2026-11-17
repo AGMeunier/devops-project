@@ -30,3 +30,9 @@ It does not provide strong security isolation by itself. By default, pods in dif
 ### Q2. Why does Kubernetes recreate the deleted pod? Which component is responsible?
 
 Kubernetes recreates the deleted pod because we specified in the deployment.yaml file that we wanted 3 replicas
+
+### Q3. What is the difference between a readiness and a liveness probe? What happens to traffic when readiness fails?
+The readiness probe decides whether a pod receives traffic. The liveness probe decides whether the container is healthy or must be restarted. When readiness fails, the pod stays running but is removed from the Service’s endpoints, so no traffic goes to it. When liveness fails, the kubelet restarts the container.
+ 
+### Q4. Is a Kubernetes Secret encrypted by default? How would you improve this?
+No. By default a Secret is only base64-encoded, not encrypted, and anyone with read access to the Secret (or to etcd) can decode it. Improvements: enable encryption at rest for etcd, restrict access with RBAC, use an external secret manager, and never commit secrets to Git.

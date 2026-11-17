@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: prod
+resources:
+  - ../../base
+replicas:
+  - name: myapp
+    count: 5
+images:
+  - name: ghcr.io/b-gaspard/devops-project:27e24e557d56da0c50ac8cbfe8185fe2ed0e33f9
+    newTag: "27e24e557d56da0c50ac8cbfe8185fe2ed0e33f9"
+labels:
+  - pairs:
+      env: prod
