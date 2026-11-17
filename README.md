@@ -25,4 +25,8 @@ The pipeline stops at the first failure and reports it immediately, instead of c
 ### Q1.What is the role of a namespace? Does it provide strong security isolation by itself?
 
 A namespace is a logical partition of a cluster. It scopes resource names (two apps can both be called myapp in different namespaces), and it is the unit to which you attach RBAC rules, resource quotas, limit ranges and network policies. It lets several teams or environments share one cluster in an organized way.
-It does not provide strong security isolation by itself. By default, pods in different namespaces can still talk to each other over the network, 
+It does not provide strong security isolation by itself. By default, pods in different namespaces can still talk to each other over the network.
+
+### Q2. Why does Kubernetes recreate the deleted pod? Which component is responsible?
+
+Kubernetes recreates the deleted pod because we specified in the deployment.yaml file that we wanted 3 replicas
