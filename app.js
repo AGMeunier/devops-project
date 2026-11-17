@@ -6,7 +6,7 @@ app.get('/ping', (_, res) => {
 });
 
 app.get('/health', (_, res) => {
-    res.send('KO');
+    res.send('OK');
 });
 
 module.exports = app;
