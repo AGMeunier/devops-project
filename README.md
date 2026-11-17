@@ -20,3 +20,9 @@ Deployment reliability: tools like Kubernetes may not pull a new image if the ta
 
 ### Q5. What does “fail fast” mean in a pipeline?
 The pipeline stops at the first failure and reports it immediately, instead of continuing with later steps. Cheap, fast checks (lint, unit tests) run before slow, expensive ones (image build, publish). This gives quicker feedback and saves CI time. It also prevents broken code from being published. Here, needs: build-test means publish never runs when tests fail, which is exactly what your screenshot showed.
+
+#### Lab
+### Q1.What is the role of a namespace? Does it provide strong security isolation by itself?
+
+A namespace is a logical partition of a cluster. It scopes resource names (two apps can both be called myapp in different namespaces), and it is the unit to which you attach RBAC rules, resource quotas, limit ranges and network policies. It lets several teams or environments share one cluster in an organized way.
+It does not provide strong security isolation by itself. By default, pods in different namespaces can still talk to each other over the network, 
