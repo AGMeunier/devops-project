@@ -7,8 +7,8 @@ replicas:
   - name: myapp
     count: 3
 images:
-  - name: ghcr.io/b-gaspard/devops-project:27e24e557d56da0c50ac8cbfe8185fe2ed0e33f9
-    newTag: "27e24e557d56da0c50ac8cbfe8185fe2ed0e33f9"
+  - name: ghcr.io/b-gaspard/devops-project:fba10690c99fd221f00e2e5a809c59d4b2f049b5
+    newTag: "fba10690c99fd221f00e2e5a809c59d4b2f049b5"
 labels:
   - pairs:
       env: staging

@@ -36,3 +36,23 @@ The readiness probe decides whether a pod receives traffic. The liveness probe d
  
 ### Q4. Is a Kubernetes Secret encrypted by default? How would you improve this?
 No. By default a Secret is only base64-encoded, not encrypted, and anyone with read access to the Secret (or to etcd) can decode it. Improvements: enable encryption at rest for etcd, restrict access with RBAC, use an external secret manager, and never commit secrets to Git.
+
+### Q5
+
+The base defines the application once, and each overlay only describes what differs per target. 
+Between a real on-prem cluster and a cloud cluster, the differences are typically:
+
+Ingress and load balancing: cloud LoadBalancer services versus MetalLB or a hardware load balancer on-prem.
+Storage: cloud storage classes versus local or NFS/Ceph storage.
+Identity and secrets: cloud IAM and KMS versus Vault or an internal PKI.
+Registry access and network: private registries, proxies, firewalls, egress rules.
+Scaling and node pools: autoscaling nodes in the cloud, fixed capacity on-prem.
+
+### Q6
+
+A Deployment’s rolling update strategy replaces pods gradually, controlled by maxSurge and maxUnavailable (25% each by default). New pods are created first, and an old pod is only removed once a new pod becomes Ready. The broken image never became Ready (it could not even be pulled), so the rollout stalled and the old ReplicaSet kept its healthy pods and kept serving traffic. This is also why the readiness probe from Part 3 matters: a pod that fails it never receives traffic.
+
+### Q7:
+Start from the running pod and read its image tag (kubectl describe pod), which is the commit SHA. Then read the Deployment’s annotations (commit, pipeline run URL, ticket). With the SHA you find the commit in Git, the pull request that contains it and its reviewer. The pipeline run URL leads to the CI logs and the publish job. The API audit log (bonus) adds who ran the apply and when.
+### Q8:
+kubectl edit changes the live cluster directly, skipping Git, code review and CI. The cluster no longer matches the repository , nothing records why the change was made, and the annotations may become false. The audit log shows only who edited it, not the reason. The next kubectl apply or a GitOps sync will silently overwrite the edit, which can reintroduce an incident. The fix is to change production only through Git and the pipeline, and to restrict edit rights with RBAC.
