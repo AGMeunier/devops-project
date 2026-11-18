@@ -35,6 +35,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Lowercase repository name
+        run: echo "lowercase_repository=${GITHUB_REPOSITORY,,}" >> $GITHUB_ENV
+
       - uses: docker/login-action@v3
         with:
           registry: ghcr.io
