@@ -155,3 +155,20 @@ vite.config.ts.timestamp-*
 .nx/cache
 .nx/workspace-data
 .nx/migrate-runs
+
+# Fichiers d'état Terraform
+*.tfstate
+*.tfstate.*
+infra/shared-state/
+infra/preview/state/
+
+# Répertoires des providers et modules téléchargés
+**/.terraform/
+
+# Fichiers de variables contenant des secrets
+*.secret.tfvars
+secrets.tfvars
+
+# Fichiers de crash
+crash.log
+crash.*.log
