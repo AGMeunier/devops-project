@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: myapp-alerts
+  namespace: monitoring
+  labels:
+    release: monitoring
+spec:
+  groups:
+    - name: myapp.rules
+      rules:
+        - alert: MyAppDown
+          expr: up{namespace="dev", service="myapp"} == 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: "Application myapp indisponible"
+            description: "La cible myapp dans le namespace dev ne répond plus depuis plus d'une minute."
